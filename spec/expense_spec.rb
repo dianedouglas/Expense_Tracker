@@ -41,6 +41,7 @@ describe 'Expense' do
 
 		it 'will delete the expense from the database.' do
 			@test_expense.save
+			expect(Expense.all).to eq [@test_expense]
 			@test_expense.delete
 			expect(Expense.all).to eq []
 		end

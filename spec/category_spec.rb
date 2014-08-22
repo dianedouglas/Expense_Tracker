@@ -20,4 +20,29 @@ describe Category do
     end
   end
 
+  describe ('.all') do
+
+    it 'will return all existing categories from the database. It should start empty.' do
+      expect(Category.all).to eq []
+    end
+  end
+
+  describe ('#save, #eq, .all') do
+
+    it 'will save the category to the database.' do
+      @test_category.save
+      expect(Category.all).to eq [@test_category]
+    end
+  end
+
+  describe ('#delete') do
+
+    it 'will delete the category from the database.' do
+      @test_category.save
+      expect(Category.all).to eq [@test_category]
+      @test_category.delete
+      expect(Category.all).to eq []
+    end
+  end
+
 end
