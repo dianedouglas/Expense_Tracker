@@ -1,4 +1,5 @@
 require 'helper_spec'
+require 'pry'
 
 describe 'Expense' do
 
@@ -49,18 +50,27 @@ describe 'Expense' do
 	describe ('#update') do
 
 		it 'will let you update the description of a purchase.' do
+			@test_expense.save
 			@test_expense.update_description('Organic Milk')
 			expect(@test_expense.description).to eq 'Organic Milk'
+			results = DB.exec("SELECT description FROM expenses WHERE id = #{@test_expense.id};")
+			expect(results.first['description']).to eq 'Organic Milk'
 		end
 
 		it 'will let you update the amount of a purchase.' do
+			@test_expense.save
 			@test_expense.update_amount(7.99)
 			expect(@test_expense.amount).to eq 7.99
+			results = DB.exec("SELECT amount FROM expenses WHERE id = #{@test_expense.id};")
+			expect(results.first['amount'].to_f).to eq 7.99
 		end
 
 		it 'will let you update the date of a purchase.' do
+			@test_expense.save
 			@test_expense.update_date('1989-01-08')
 			expect(@test_expense.date).to eq '1989-01-08'
+			results = DB.exec("SELECT date FROM expenses WHERE id = #{@test_expense.id};")
+			expect(results.first['date']).to eq '1989-01-08'
 		end
 	end
 end
