@@ -53,14 +53,10 @@ class Expense
 
   def categories
   	categories = []
-  	results = DB.exec("SELECT * FROM categories_expenses WHERE expense_id = #{@id};")
+  	results = DB.exec("SELECT * FROM categories_expenses JOIN categories ON (expense_id = #{@id}) WHERE (categories.id = category_id);")
   	results.each do |result|
-  		category_id = result['category_id']
-  		category_results = DB.exec("SELECT * FROM categories WHERE id = #{category_id};")
-  		category_results.each do |category|
-	  	  category = Category.new(category)
-	  	  categories << category
-	  	end
+  	  category = Category.new(result)
+  	  categories << category
   	end
   	categories
   end
