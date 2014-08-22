@@ -45,4 +45,19 @@ describe Category do
     end
   end
 
+  describe ('#update') do
+
+    it 'will let you update the description of a category.' do
+      @test_category.save
+      expect(@test_category.description).to eq 'Groceries'
+      results = DB.exec("SELECT description FROM categories WHERE id = #{@test_category.id};")
+      expect(results.first['description']).to eq 'Groceries'
+
+      @test_category.update_description('Drinks')
+      expect(@test_category.description).to eq 'Drinks'
+      results = DB.exec("SELECT description FROM categories WHERE id = #{@test_category.id};")
+      expect(results.first['description']).to eq 'Drinks'
+    end
+  end
+
 end

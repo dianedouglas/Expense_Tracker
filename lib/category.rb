@@ -30,5 +30,10 @@ class Category
     DB.exec("DELETE FROM categories WHERE id = #{@id};")
   end
 
+  def update_description(new_description)
+    @description = new_description
+    DB.exec("UPDATE categories SET description = '#{@description}' WHERE id = #{@id};")
+  end
+
 
 end
