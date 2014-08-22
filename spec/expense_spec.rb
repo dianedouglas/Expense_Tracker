@@ -87,11 +87,21 @@ describe 'Expense' do
 		end
 	end
 
-	# describe ('#add_category, #categories') do
+	describe ('#add_category, #categories') do
 
-	# 	it 'will let you add a category to a purchase.' do
-	# 		@test_expense.add_category(@test_category)
-	# 		expect(@test_expense.categories).to eq [@test_category]
-	# 	end
-	# end
+		it 'will let you add a category to a purchase.' do
+			@test_category.save
+			@test_expense.add_category(@test_category)
+			expect(@test_expense.categories).to eq [@test_category]
+		end
+
+		it 'will let you add more than one category to a purchase' do
+			@test_category.save
+			@test_category2.save
+			@test_category3.save
+			@test_expense.add_category(@test_category)
+			@test_expense.add_category(@test_category3)
+			expect(@test_expense.categories).to eq [@test_category, @test_category3]
+		end
+	end
 end

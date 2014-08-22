@@ -47,4 +47,21 @@ class Expense
 		DB.exec("UPDATE expenses SET date = '#{@date}' WHERE id = #{@id};")
 	end
 
+  def add_category(category)
+  	DB.exec("INSERT INTO categories_expenses (expense_id, category_id) VALUES (#{@id}, #{category.id});")
+  end
+
+  def categories
+  	categories = []
+  	results = DB.exec("SELECT * FROM categories_expenses WHERE expense_id = #{@id};")
+  	results.each do |result|
+  		category_id = result['category_id']
+  		category_results = DB.exec("SELECT * FROM categories WHERE id = #{category_id};")
+  		category_results.each do |category|
+	  	  category = Category.new(category)
+	  	  categories << category
+	  	end
+  	end
+  	categories
+  end
 end

@@ -34,6 +34,4 @@ class Category
     @description = new_description
     DB.exec("UPDATE categories SET description = '#{@description}' WHERE id = #{@id};")
   end
-
-
 end
