@@ -7,15 +7,15 @@ describe 'Expense' do
 	end
 
 	describe ('#initialize') do
-		
+
 		it 'will create an expense object.' do
 			expect(@test_expense).to be_an_instance_of Expense
 		end
 	end
 
-	describe ('#attributes') do 
+	describe ('#attributes') do
 
-		it 'will return the value of each attribute of expense.' do 
+		it 'will return the value of each attribute of expense.' do
 			expect(@test_expense.description).to eq 'Milk'
 			expect(@test_expense.amount).to eq 1.65
 			expect(@test_expense.date).to eq '1999-01-08'
@@ -34,6 +34,15 @@ describe 'Expense' do
 		it 'will save the expense to the database.' do
 			@test_expense.save
 			expect(Expense.all).to eq [@test_expense]
+		end
+	end
+
+	describe ('#delete') do
+
+		it 'will delete the expense from the database.' do
+			@test_expense.save
+			@test_expense.delete
+			expect(Expense.all).to eq []
 		end
 	end
 end

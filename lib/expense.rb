@@ -28,4 +28,8 @@ class Expense
 		@description == other_expense.description && @amount == other_expense.amount && @date == other_expense.date && @id == other_expense.id
 	end
 
+	def delete
+		DB.exec("DELETE FROM expenses WHERE id = #{@id};")
+	end
+
 end
