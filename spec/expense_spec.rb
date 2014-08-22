@@ -1,5 +1,4 @@
 require 'helper_spec'
-require 'pry'
 
 describe 'Expense' do
 
@@ -73,4 +72,12 @@ describe 'Expense' do
 			expect(results.first['date']).to eq '1989-01-08'
 		end
 	end
+
+	# describe ('#add_category, #categories') do
+
+	# 	it 'will let you add a category to a purchase.' do
+	# 		@test_expense.add_category(@test_category)
+	# 		expect(@test_expense.categories).to eq [@test_category]
+	# 	end
+	# end
 end
