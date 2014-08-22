@@ -45,4 +45,22 @@ describe 'Expense' do
 			expect(Expense.all).to eq []
 		end
 	end
+
+	describe ('#update') do
+
+		it 'will let you update the description of a purchase.' do
+			@test_expense.update_description('Organic Milk')
+			expect(@test_expense.description).to eq 'Organic Milk'
+		end
+
+		it 'will let you update the amount of a purchase.' do
+			@test_expense.update_amount(7.99)
+			expect(@test_expense.amount).to eq 7.99
+		end
+
+		it 'will let you update the date of a purchase.' do
+			@test_expense.update_date('1989-01-08')
+			expect(@test_expense.date).to eq '1989-01-08'
+		end
+	end
 end

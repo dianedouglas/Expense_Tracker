@@ -1,6 +1,6 @@
 class Expense
 
-	attr_accessor :description, :amount, :date, :id
+	attr_reader :description, :amount, :date, :id
 
 	def initialize(attributes)
 		@description = attributes['description']
@@ -30,6 +30,21 @@ class Expense
 
 	def delete
 		DB.exec("DELETE FROM expenses WHERE id = #{@id};")
+	end
+
+	def update_description(new_description)
+		@description = new_description
+		DB.exec("UPDATE expenses SET description = '#{@description}' WHERE id = #{@id};")
+	end
+
+	def update_amount(new_amount)
+		@amount = new_amount
+		DB.exec("UPDATE expenses SET amount = #{@amount} WHERE id = #{@id};")
+	end
+
+	def update_date(new_date)
+		@date = new_date
+		DB.exec("UPDATE expenses SET date = '#{@date}' WHERE id = #{@id};")
 	end
 
 end
