@@ -34,4 +34,14 @@ class Category
     @description = new_description
     DB.exec("UPDATE categories SET description = '#{@description}' WHERE id = #{@id};")
   end
+
+  def expenses
+    expenses = []
+    results = DB.exec("SELECT * FROM categories_expenses JOIN expenses ON (category_id = #{@id}) WHERE (expenses.id = expense_id);")
+    results.each do |result|
+      expense = Expense.new(result)
+      expenses << expense
+    end
+    expenses    
+  end
 end

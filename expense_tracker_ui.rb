@@ -46,8 +46,10 @@ def main_menu
     when 'CE'
       add_expense_to_category
     when 'LEC'
+      select_category
       list_expenses_in_a_category
     when 'LCE'
+      select_expense
       list_categories_in_a_expense
     when 'X'
       exit
@@ -231,15 +233,42 @@ def edit_category
 end
 
 def add_expense_to_category
-
+  select_expense
+  puts "You have selected: #{@current_expense.description}"
+  sleep 1
+  select_category
+  sleep 1
+  puts "You have selected: #{@current_category.description}"
+  sleep 1
+  list_expenses_in_a_category
 end
 
 def list_expenses_in_a_category
-
+  puts "Here are all the expenses in the category: #{@current_category.description}"
+  puts ""
+  sleep 1
+  @current_category.expenses.each_with_index do |expense, i|
+    @current_expense = expense
+    puts ""
+    puts ""
+    sleep 1
+    puts "expense #" + (i + 1).to_s
+    puts "\n#{expense.description}"
+  end
 end
 
 def list_categories_in_a_expense
-
+  puts "Here are all the categories assigned to the expense: #{@current_expense.description}"
+  puts ""
+  sleep 1
+  @current_expense.categories.each_with_index do |category, i|
+    @current_category = category
+    puts ""
+    puts ""
+    sleep 1
+    puts "Category #" + (i + 1).to_s
+    puts "\n#{category.description}"
+  end
 end
 
 welcome

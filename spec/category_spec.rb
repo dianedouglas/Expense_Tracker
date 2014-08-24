@@ -60,4 +60,14 @@ describe Category do
     end
   end
 
+  describe ('#expenses') do
+
+    it 'will return the expenses assigned to this category.' do
+      @test_category.save
+      @test_expense.save
+      @test_expense.add_category(@test_category)
+      expect(@test_category.expenses).to eq [@test_expense]
+    end
+  end
+
 end
