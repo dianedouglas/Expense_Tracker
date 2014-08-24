@@ -125,10 +125,8 @@ def select_expense
     loop do
       puts "Choose an expense by typing its number."
       expense = gets.chomp.to_i
-      if [1..Expense.all.length].include? expense
+      if expense <= Expense.all.length && expense > 0
         @current_expense = Expense.all[expense - 1]
-        binding.pry
-      else
         break
       end
     end
@@ -144,9 +142,8 @@ def select_category
     loop do
       puts "Choose a category by typing its number."
       category = gets.chomp.to_i
-      if [1..Category.all.length].include? category
+      if category <= Category.all.length && category > 0
         @current_category = Category.all[category - 1]
-      else
         break
       end
     end
@@ -203,6 +200,9 @@ end
 
 def edit_category
   select_category
+  sleep 1
+  puts "You have selected: #{@current_category.description}"
+  sleep 1
   choice = nil
   until choice == 'M'
     puts "Press [N] to edit the name of the category."
