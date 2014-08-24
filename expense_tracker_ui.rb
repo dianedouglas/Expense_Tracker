@@ -1,5 +1,6 @@
 require './lib/expense'
 require './lib/category'
+require 'active_support/core_ext/string/inflections'
 require 'pry'
 require 'PG'
 
@@ -40,9 +41,11 @@ def main_menu
     when 'EC'
       edit_category
     when 'LE'
-      list_expenses
+      # list_expenses
+      list(Expense.new({}))
     when 'LC'
-      list_categories
+      # list_categories
+      list(Category.new({}))
     when 'CE'
       add_expense_to_category
     when 'LEC'
@@ -117,6 +120,33 @@ def list_categories
       sleep 1
       puts "Category #" + (i + 1).to_s
       puts "\n#{category.description}"
+    end
+  end
+end
+
+def list(object)
+
+    @plural_object_name = object.class.to_s.pluralize
+  if object.class.to_s == "Category"
+    @other_plural_object_name = "Expenses"
+  elsif object.class.to_s == "Expense"
+    @other_plural_object_name = "Categories"
+  end
+        
+  if object.class.all.length == 0
+    puts "You have not created any #{@plural_object_name} yet."
+  else
+    puts "Here are all the #{@plural_object_name} you have for your #{@other_plural_object_name}."
+    object.class.all.each_with_index do |current_object, i|
+      puts ""
+      sleep 1
+      puts "#{current_object.class} #" + (i + 1).to_s
+      if current_object.class.to_s == "Category"
+        puts "\n#{current_object.description}"
+      elsif current_object.class.to_s == "Expense"
+        @current_expense = current_object
+        print_expense
+      end
     end
   end
 end
