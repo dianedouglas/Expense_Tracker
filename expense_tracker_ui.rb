@@ -1,6 +1,5 @@
 require './lib/expense'
 require './lib/category'
-require 'active_support/core_ext/string/inflections'
 require 'pry'
 require 'PG'
 
@@ -41,10 +40,8 @@ def main_menu
     when 'EC'
       edit_category
     when 'LE'
-      # list_expenses
       list(Expense.new({}))
     when 'LC'
-      # list_categories
       list(Category.new({}))
     when 'CE'
       add_expense_to_category
@@ -80,7 +77,7 @@ def add_category
   description = gets.chomp
   @current_category = Category.new({'description' => description})
   @current_category.save
-  list_categories
+  list(Category.new({}))
 end
 
 def print_expense
@@ -88,40 +85,6 @@ def print_expense
   puts "#{@current_expense.description}"
   puts "Purchased on: #{@current_expense.date}"
   puts "$#{@current_expense.amount}"
-end
-
-def list_expenses
-  if Expense.all.length == 0
-    puts "You have not logged any expenses yet."
-    @current_expense = nil
-  else
-    puts "\nHere are all your logged expenses.\n"
-    Expense.all.each_with_index do |expense, i|
-      @current_expense = expense
-      puts ""
-      puts ""
-      sleep 1
-      puts "Expense #" + (i + 1).to_s
-      print_expense
-    end
-  end
-end
-
-def list_categories
-  if Category.all.length == 0
-    puts "You have not created any categories yet."
-    @current_category = nil
-  else
-    puts "Here are all the categories you have for your expenses."
-    Category.all.each_with_index do |category, i|
-      @current_category = category
-      puts ""
-      puts ""
-      sleep 1
-      puts "Category #" + (i + 1).to_s
-      puts "\n#{category.description}"
-    end
-  end
 end
 
 def list(object)
@@ -152,7 +115,7 @@ def list(object)
 end
 
 def select_expense
-  list_expenses
+  list(Expense.new({}))
   if Expense.all.length > 0
     loop do
       puts "Choose an expense by typing its number."
@@ -169,7 +132,7 @@ def select_expense
 end
 
 def select_category
-  list_categories
+  list(Category.new({}))
   if Category.all.length > 0
     loop do
       puts "Choose a category by typing its number."
@@ -220,7 +183,7 @@ def edit_expense
     when 'R'
       @current_expense.delete
       puts "It's gone!"
-      list_expenses
+      list(Expense.new({}))
     when 'M'
       main_menu
     else
@@ -253,7 +216,7 @@ def edit_category
       puts "It's gone!"
       puts ""
       @current_category.delete
-      list_categories
+      list(Category.new({}))
     when 'M'
       main_menu
     else
