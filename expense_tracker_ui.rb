@@ -236,10 +236,13 @@ def add_expense_to_category
   select_expense
   puts "You have selected: #{@current_expense.description}"
   sleep 1
+  puts "\nNow you have to choose a category to assign it to.\n"
+  sleep 1
   select_category
   sleep 1
   puts "You have selected: #{@current_category.description}"
   sleep 1
+  @current_expense.add_category(@current_category)
   list_expenses_in_a_category
 end
 
@@ -252,7 +255,7 @@ def list_expenses_in_a_category
     puts ""
     puts ""
     sleep 1
-    puts "expense #" + (i + 1).to_s
+    puts "Expense #" + (i + 1).to_s
     puts "\n#{expense.description}"
   end
 end
