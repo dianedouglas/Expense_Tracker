@@ -1,5 +1,6 @@
 require './lib/expense'
 require './lib/category'
+require 'active_support/core_ext/string/inflections'
 require 'pry'
 require 'PG'
 
@@ -8,7 +9,7 @@ DB = PG.connect({:dbname => 'expense_organizer'})
 @current_category = nil
 
 def welcome
-  puts "Alan please add content.\n\n"
+  puts "Welcome!\n\n"
   main_menu
 end
 
