@@ -4,7 +4,7 @@ require 'expense'
 require 'category'
 require 'pry'
 
-DB = PG.connect({:dbname => 'expense_tracker'})
+DB = PG.connect({:dbname => 'expense_organizer'})
 
 RSpec.configure do |config|
   config.after(:each) do

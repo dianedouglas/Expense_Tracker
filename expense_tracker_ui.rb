@@ -3,7 +3,7 @@ require './lib/category'
 require 'pry'
 require 'PG'
 
-DB = PG.connect({:dbname => 'expense_tracker'})
+DB = PG.connect({:dbname => 'expense_organizer'})
 @current_expense = nil
 @current_category = nil
 
@@ -77,6 +77,7 @@ def add_category
 end
 
 def print_expense
+  puts ""
   puts "#{@current_expense.description}"
   puts "Purchased on: #{@current_expense.date}"
   puts "$#{@current_expense.amount}"
@@ -90,7 +91,10 @@ def list_expenses
     puts "\nHere are all your logged expenses.\n"
     Expense.all.each_with_index do |expense, i|
       @current_expense = expense
-      puts "Expense #" + i.to_s
+      puts ""
+      puts ""
+      sleep 1
+      puts "Expense #" + (i + 1).to_s
       print_expense
     end
   end
@@ -110,11 +114,16 @@ end
 
 def select_expense
   list_expenses
-  if @current_expense != nil
-    puts "Choose an expense by typing its number."
-    expense = gets.chomp.to_i
-    if
-
+  if Expense.all.length > 0
+    loop do
+      puts "Choose an expense by typing its number."
+      expense = gets.chomp.to_i
+      if [1..Expense.all.length].include? expense
+        @current_expense = Expense.all[expense - 1]
+      else
+        break
+      end
+    end
   else
     puts "You need to add some expenses before you can edit them."
     main_menu
@@ -127,6 +136,9 @@ end
 
 def edit_expense
   select_expense
+  sleep 1
+  puts "You have selected: #{@current_expense.description}"
+  sleep 1
   choice = nil
   until choice == 'M'
     puts "Press [N] to edit the name of the expense."
