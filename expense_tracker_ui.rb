@@ -187,7 +187,7 @@ def edit_expense
       print_expense
     when 'R'
       @current_expense.delete
-      puts "It's gone! Here are your other expenses."
+      puts "It's gone!"
       list_expenses
     when 'M'
       main_menu
@@ -213,11 +213,13 @@ def edit_category
     when 'N'
       puts "Enter new name:"
       name = gets.chomp
-      @current_expense.update_description(name)
+      @current_category.update_description(name)
       puts "OK, here ya go: "
       puts "#{@current_category.description}"
+      puts ""
     when 'R'
-      puts "It's gone! Here are your other expenses."
+      puts "It's gone!"
+      puts ""
       @current_category.delete
       list_categories
     when 'M'
