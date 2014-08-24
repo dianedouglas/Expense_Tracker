@@ -43,6 +43,8 @@ def main_menu
       list_expenses
     when 'LC'
       list_categories
+    when 'CE'
+      add_expense_to_category
     when 'LEC'
       list_expenses_in_a_category
     when 'LCE'
@@ -106,7 +108,12 @@ def list_categories
     @current_category = nil
   else
     puts "Here are all the categories you have for your expenses."
-    Category.all.each do |category|
+    Category.all.each_with_index do |category, i|
+      @current_category = category
+      puts ""
+      puts ""
+      sleep 1
+      puts "Category #" + (i + 1).to_s
       puts "\n#{category.description}"
     end
   end
@@ -120,6 +127,7 @@ def select_expense
       expense = gets.chomp.to_i
       if [1..Expense.all.length].include? expense
         @current_expense = Expense.all[expense - 1]
+        binding.pry
       else
         break
       end
@@ -131,7 +139,21 @@ def select_expense
 end
 
 def select_category
-
+  list_categories
+  if Category.all.length > 0
+    loop do
+      puts "Choose a category by typing its number."
+      category = gets.chomp.to_i
+      if [1..Category.all.length].include? category
+        @current_category = Category.all[category - 1]
+      else
+        break
+      end
+    end
+  else
+    puts "You need to add some expenses before you can edit them."
+    main_menu
+  end
 end
 
 def edit_expense
@@ -167,8 +189,8 @@ def edit_expense
       puts "OK, here ya go: "
       print_expense
     when 'R'
-      puts "It's gone! Here are your other expenses."
       @current_expense.delete
+      puts "It's gone! Here are your other expenses."
       list_expenses
     when 'M'
       main_menu
@@ -206,5 +228,16 @@ def edit_category
   end
 end
 
+def add_expense_to_category
+
+end
+
+def list_expenses_in_a_category
+
+end
+
+def list_categories_in_a_expense
+
+end
+
 welcome
-#dollar sign, date formatting
